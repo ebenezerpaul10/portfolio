@@ -1,6 +1,6 @@
 /**
  * Ebenezer Paul — Minimalist Cybersecurity Portfolio
- * Fluid Motion, Interactive Terminal, Spotlight & Reactive Animations
+ * Fluid Cyber Canvas, Scroll Velocity Effects, Text Scramble, Magnetic Hover & 3D Tilt
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,18 +10,158 @@ document.addEventListener('DOMContentLoaded', () => {
     yearElement.textContent = new Date().getFullYear();
   }
 
-  // --- 1. Scroll Progress Bar ---
-  const progressBar = document.getElementById('progressBar');
-  function updateScrollProgress() {
-    if (!progressBar) return;
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    progressBar.style.width = `${Math.min(scrollPercent, 100)}%`;
-  }
-  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  // --- 1. Interactive Background Cyber Particle Network Canvas ---
+  const canvas = document.getElementById('bgCanvas');
+  let ctx = null;
+  let particles = [];
+  let width = (window.innerWidth);
+  let height = (window.innerHeight);
+  let mouse = { x: -1000, y: -1000 };
+  let scrollVelocity = 0;
+  let lastScrollY = window.scrollY;
 
-  // --- 2. Custom Fluid Cursor & Ambient Tracker (Desktop) ---
+  if (canvas) {
+    ctx = canvas.getContext('2d');
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initParticles();
+    }
+
+    function initParticles() {
+      particles = [];
+      const particleCount = Math.min(Math.floor((width * height) / 22000), 55);
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          radius: Math.random() * 1.8 + 1,
+          baseColor: Math.random() > 0.4 ? 'rgba(34, 211, 238,' : 'rgba(16, 185, 129,'
+        });
+      }
+    }
+
+    window.addEventListener('resize', resizeCanvas, { passive: true });
+    resizeCanvas();
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    }, { passive: true });
+
+    window.addEventListener('mouseleave', () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    });
+
+    // Particle Animation Loop with Scroll Acceleration
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Smooth scroll velocity decay
+      scrollVelocity *= 0.92;
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+
+        // Normal drift + scroll reaction
+        p.x += p.vx;
+        p.y += p.vy - scrollVelocity * 0.35;
+
+        // Wrap around screen borders
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        // Mouse repulsion
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          const force = (100 - dist) / 100;
+          p.x -= (dx / dist) * force * 2.2;
+          p.y -= (dy / dist) * force * 2.2;
+        }
+
+        // Draw particle dot
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `${p.baseColor} 0.6)`;
+        ctx.fill();
+
+        // Connect nearby particles with cyber lines
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dist2 = Math.hypot(p.x - p2.x, p.y - p2.y);
+          if (dist2 < 120) {
+            const alpha = (1 - dist2 / 120) * 0.18;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(34, 211, 238, ${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+    requestAnimationFrame(animateParticles);
+  }
+
+  // --- 2. Scroll Progress Bar & Background Parallax ---
+  const progressBar = document.getElementById('progressBar');
+  const glow1 = document.getElementById('glow1');
+  const glow2 = document.getElementById('glow2');
+  const floatingDock = document.getElementById('floatingDock');
+
+  function handleScroll() {
+    const currentScrollY = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+    // Track scroll velocity for canvas particles
+    scrollVelocity = (currentScrollY - lastScrollY);
+    lastScrollY = currentScrollY;
+
+    // Top progress bar
+    if (progressBar && docHeight > 0) {
+      const scrollPercent = (currentScrollY / docHeight) * 100;
+      progressBar.style.width = `${Math.min(scrollPercent, 100)}%`;
+    }
+
+    // Parallax motion on ambient glows
+    if (glow1) {
+      glow1.style.transform = `translate3d(0, ${currentScrollY * -0.12}px, 0)`;
+    }
+    if (glow2) {
+      glow2.style.transform = `translate3d(0, ${currentScrollY * 0.08}px, 0)`;
+    }
+
+    // Floating Quick Island visibility
+    if (floatingDock) {
+      if (currentScrollY > 380) {
+        floatingDock.classList.add('visible');
+      } else {
+        floatingDock.classList.remove('visible');
+      }
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+
+  // Scroll to Top action
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // --- 3. Custom Fluid Cursor & Ambient Tracker (Desktop) ---
   const cursorDot = document.getElementById('cursorDot');
   const cursorRing = document.getElementById('cursorRing');
 
@@ -38,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
       cursorDot.style.top = `${mouseY}px`;
     });
 
-    // Smooth lerp trailing animation for the cursor ring
     function renderCursor() {
       ringX += (mouseX - ringX) * 0.16;
       ringY += (mouseY - ringY) * 0.16;
@@ -48,7 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     requestAnimationFrame(renderCursor);
 
-    // Hover detection for interactive elements
     const interactiveSelectors = 'a, button, input, [data-hover="true"], .spotlight-card, .chip-btn';
     document.addEventListener('mouseover', (e) => {
       if (e.target.closest(interactiveSelectors)) {
@@ -62,7 +200,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 3. Spotlight Card Glow & 3D Reactive Tilt ---
+  // --- 4. Magnetic Micro-Interaction on Magnetic Targets ---
+  const magneticElements = document.querySelectorAll('.magnetic-target');
+  if (window.matchMedia('(pointer: fine)').matches) {
+    magneticElements.forEach((el) => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const deltaX = (e.clientX - centerX) * 0.28;
+        const deltaY = (e.clientY - centerY) * 0.28;
+
+        el.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      });
+
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = '';
+      });
+    });
+  }
+
+  // --- 5. Spotlight Card Glow & 3D Reactive Tilt ---
   const spotlightCards = document.querySelectorAll('.spotlight-card');
   spotlightCards.forEach((card) => {
     card.addEventListener('mousemove', (e) => {
@@ -73,11 +231,10 @@ document.addEventListener('DOMContentLoaded', () => {
       card.style.setProperty('--mouse-x', `${x}px`);
       card.style.setProperty('--mouse-y', `${y}px`);
 
-      // Gentle 3D perspective tilt
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
-      const rotateX = ((y - centerY) / centerY) * -4;
-      const rotateY = ((x - centerX) / centerX) * 4;
+      const rotateX = ((y - centerY) / centerY) * -4.5;
+      const rotateY = ((x - centerX) / centerX) * 4.5;
 
       card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
     });
@@ -89,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- 4. Click Ripple Wave Animation ---
+  // --- 6. Click Ripple Wave Animation ---
   function createRipple(e) {
     const btn = e.currentTarget;
     const rect = btn.getBoundingClientRect();
@@ -107,12 +264,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 600);
   }
 
-  const rippleElements = document.querySelectorAll('.btn, .chip-btn, .social-link, .contact-pill, .icon-link');
+  const rippleElements = document.querySelectorAll('.btn, .chip-btn, .social-link, .contact-pill, .icon-link, .dock-btn');
   rippleElements.forEach((el) => {
     el.addEventListener('click', createRipple);
   });
 
-  // --- 5. Scroll-Driven Reveal Animation ---
+  // --- 7. Cyberpunk / Matrix Text Scramble Decoding Effect ---
+  const scrambleChars = '!<>-_\\/[]{}—=+*^?#________';
+  function scrambleText(element) {
+    const finalContent = element.getAttribute('data-scramble') || element.textContent;
+    let iteration = 0;
+    const totalFrames = finalContent.length;
+
+    const interval = setInterval(() => {
+      element.textContent = finalContent
+        .split('')
+        .map((char, index) => {
+          if (char === ' ') return ' ';
+          if (index < iteration) {
+            return finalContent[index];
+          }
+          return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+        })
+        .join('');
+
+      if (iteration >= totalFrames) {
+        clearInterval(interval);
+        element.textContent = finalContent;
+      }
+      iteration += 1 / 2;
+    }, 28);
+  }
+
+  // --- 8. Scroll-Driven Reveal Animation & Scramble Trigger ---
   const revealElements = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     const revealObserver = new IntersectionObserver(
@@ -120,6 +304,14 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('revealed');
+
+            // Check if inside has scramble elements
+            const scrambleTarget = entry.target.querySelector('[data-scramble]');
+            if (scrambleTarget && !scrambleTarget.dataset.scrambled) {
+              scrambleTarget.dataset.scrambled = "true";
+              scrambleText(scrambleTarget);
+            }
+
             observer.unobserve(entry.target);
           }
         });
@@ -132,11 +324,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     revealElements.forEach((el) => revealObserver.observe(el));
   } else {
-    // Fallback for older browsers
     revealElements.forEach((el) => el.classList.add('revealed'));
   }
 
-  // --- 6. Mobile Navigation Toggle ---
+  // --- 9. Mobile Navigation Toggle ---
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
 
@@ -152,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 7. Toast Notification System & Clipboard ---
+  // --- 10. Toast Notification System & Clipboard ---
   const toast = document.getElementById('toast');
   let toastTimeout = null;
 
@@ -210,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 8. Active Nav Link on Scroll ---
+  // --- 11. Active Nav Link on Scroll ---
   const sections = document.querySelectorAll('section[id]');
   const navItems = document.querySelectorAll('.nav-item');
 
@@ -235,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.addEventListener('scroll', highlightNavOnScroll, { passive: true });
 
-  // --- 9. Interactive Terminal Simulation with Fluid Typewriter ---
+  // --- 12. Interactive Terminal Simulation with Fluid Typewriter ---
   const terminalOutput = document.getElementById('terminalOutput');
   const terminalInput = document.getElementById('terminalInput');
   const terminalSubmit = document.getElementById('terminalSubmitBtn');

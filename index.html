@@ -14,6 +14,13 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Top Reading / Scroll Progress Bar -->
+  <div class="scroll-progress-bar" id="progressBar"></div>
+
+  <!-- Custom Ambient Cursor (Desktop Only) -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
   <!-- Ambient background glow elements -->
   <div class="ambient-glow glow-1"></div>
   <div class="ambient-glow glow-2"></div>
@@ -21,25 +28,35 @@
   <!-- Navigation Bar -->
   <header class="navbar">
     <div class="container nav-content">
-      <a href="#hero" class="brand-logo">
+      <a href="#hero" class="brand-logo" data-hover="true">
         <span class="logo-accent">&gt;</span> EP<span class="logo-dim">.sec</span>
       </a>
       
       <nav class="nav-links" id="navLinks">
         <a href="#about" class="nav-item">About</a>
-        <a href="#projects" class="nav-item">Projects & Labs</a>
+        <a href="#projects" class="nav-item">Projects &amp; Labs</a>
         <a href="#skills" class="nav-item">Skills</a>
         <a href="#contact" class="nav-item">Contact</a>
       </nav>
 
       <div class="nav-actions">
-        <button id="copyEmailQuickBtn" class="btn btn-secondary btn-sm" title="Copy email to clipboard">
+        <!-- Quick Call Pill -->
+        <a href="tel:+917904509223" class="btn btn-secondary btn-sm quick-phone-btn" title="Call Ebenezer Paul" data-hover="true">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          <span>Call Me</span>
+        </a>
+
+        <!-- Quick Copy Email Button -->
+        <button id="copyEmailQuickBtn" class="btn btn-secondary btn-sm" title="Copy email to clipboard" data-hover="true">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
           </svg>
           <span>Copy Email</span>
         </button>
+
         <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle menu">
           <span></span>
           <span></span>
@@ -53,10 +70,10 @@
     <!-- Hero Section -->
     <section id="hero" class="hero-section">
       <div class="container hero-grid">
-        <div class="hero-info">
-          <div class="status-badge">
+        <div class="hero-info reveal">
+          <div class="status-badge" data-hover="true">
             <span class="status-dot"></span>
-            <span class="status-text">Available for Internships & Projects</span>
+            <span class="status-text">Available for Internships &amp; Research</span>
           </div>
           
           <h1 class="hero-title">
@@ -69,30 +86,56 @@
             Hi, I'm <strong class="text-highlight">Ebenezer Paul</strong> — a cybersecurity student and aspiring security specialist. I focus on defensive security, threat modeling, network traffic analysis, and developing resilient software systems.
           </p>
 
+          <!-- Direct Quick Contact Badges -->
+          <div class="quick-contact-pills">
+            <a href="tel:+917904509223" class="contact-pill" title="Click to call directly" data-hover="true">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <span>+91 79045 09223</span>
+            </a>
+            <a href="mailto:ebenezerpaul787@gmail.com" class="contact-pill" title="Click to send email" data-hover="true">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <span>ebenezerpaul787@gmail.com</span>
+            </a>
+          </div>
+
           <div class="hero-cta-group">
-            <a href="#projects" class="btn btn-primary">
-              <span>View Projects & Labs</span>
+            <a href="#projects" class="btn btn-primary" data-hover="true">
+              <span>View Projects &amp; Labs</span>
               <svg class="icon arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
             </a>
-            <a href="#contact" class="btn btn-outline">Connect With Me</a>
+            <a href="#contact" class="btn btn-outline" data-hover="true">Get In Touch</a>
           </div>
 
           <div class="hero-socials">
-            <span class="social-label">FIND ME ON:</span>
-            <a href="https://github.com/ebenezerpaul10" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+            <span class="social-label">DIRECT REACH:</span>
+            <!-- Phone Call -->
+            <a href="tel:+917904509223" class="social-link" title="Call +91 79045 09223" data-hover="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </a>
+            <!-- WhatsApp -->
+            <a href="https://wa.me/917904509223?text=Hi%20Ebenezer,%20saw%20your%20portfolio!" target="_blank" rel="noopener noreferrer" class="social-link" title="Chat on WhatsApp" data-hover="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+              </svg>
+            </a>
+            <!-- GitHub -->
+            <a href="https://github.com/ebenezerpaul10" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub Profile" data-hover="true">
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
               </svg>
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-              </svg>
-            </a>
-            <a href="#contact" class="social-link" title="Direct Email">
+            <!-- Email -->
+            <a href="mailto:ebenezerpaul787@gmail.com" class="social-link" title="Direct Email" data-hover="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                 <polyline points="22,6 12,13 2,6"></polyline>
@@ -102,8 +145,8 @@
         </div>
 
         <!-- Interactive Terminal Simulator -->
-        <div class="hero-terminal-wrapper">
-          <div class="terminal-card">
+        <div class="hero-terminal-wrapper reveal" style="--delay: 1.5;">
+          <div class="terminal-card spotlight-card" data-hover="true">
             <div class="terminal-header">
               <div class="window-buttons">
                 <span class="dot close"></span>
@@ -111,33 +154,34 @@
                 <span class="dot maximize"></span>
               </div>
               <div class="terminal-title">ebenezer@sec-node: ~</div>
-              <div class="terminal-badge">LIVE SESSION</div>
+              <div class="terminal-badge">INTERACTIVE CONSOLE</div>
             </div>
             
             <div class="terminal-body" id="terminalOutput">
               <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">whoami</span></div>
-              <div class="term-response text-emerald">&gt; Ebenezer Paul // Cybersecurity Scholar & Defensive Researcher</div>
+              <div class="term-response text-emerald">&gt; Ebenezer Paul // Cybersecurity Scholar &amp; Defensive Researcher</div>
               
-              <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">cat focus_areas.txt</span></div>
-              <div class="term-response">&gt; [01] Network Packet Analysis & Protocol Defense<br>&gt; [02] Incident Response & Threat Intelligence<br>&gt; [03] Vulnerability Assessment & Secure Coding</div>
+              <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">cat contact_card.txt</span></div>
+              <div class="term-response">&gt; Phone : +91 79045 09223<br>&gt; Email : ebenezerpaul787@gmail.com<br>&gt; Status: 🟢 Open to Internships &amp; Research Collabs</div>
               
               <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">check-status</span></div>
-              <div class="term-response text-cyan">&gt; System: Online | Firewall: Active | Ready for projects &amp; internships.</div>
+              <div class="term-response text-cyan">&gt; System: Online | Shield: Active | Click chips or type commands below.</div>
             </div>
 
             <!-- Terminal Interactive Quick Commands -->
             <div class="terminal-interactive">
-              <div class="terminal-chips-label">Quick Execute:</div>
+              <div class="terminal-chips-label">Quick Trigger Commands:</div>
               <div class="terminal-chips">
-                <button class="chip-btn" data-command="skills">--skills</button>
-                <button class="chip-btn" data-command="projects">--projects</button>
-                <button class="chip-btn" data-command="contact">--contact</button>
-                <button class="chip-btn" data-command="clear">--clear</button>
+                <button class="chip-btn" data-command="phone" data-hover="true">--phone</button>
+                <button class="chip-btn" data-command="skills" data-hover="true">--skills</button>
+                <button class="chip-btn" data-command="projects" data-hover="true">--projects</button>
+                <button class="chip-btn" data-command="contact" data-hover="true">--contact</button>
+                <button class="chip-btn" data-command="clear" data-hover="true">--clear</button>
               </div>
               <div class="terminal-input-bar">
                 <span class="term-prompt">&gt;</span>
-                <input type="text" id="terminalInput" placeholder="Type a command (try 'help', 'about', 'clear')..." autocomplete="off" />
-                <button id="terminalSubmitBtn" aria-label="Send command">↵</button>
+                <input type="text" id="terminalInput" placeholder="Try 'phone', 'skills', 'projects', 'help'..." autocomplete="off" />
+                <button id="terminalSubmitBtn" aria-label="Send command" data-hover="true">↵</button>
               </div>
             </div>
           </div>
@@ -148,44 +192,45 @@
     <!-- About Section -->
     <section id="about" class="section-padding">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <div class="section-subtitle">ABOUT ME</div>
           <h2 class="section-title">Security with an Analytical Mindset</h2>
+          <p class="section-desc">Balancing deep theoretical security understanding with practical defensive tooling.</p>
         </div>
 
         <div class="about-grid">
-          <div class="about-card">
+          <div class="about-card spotlight-card reveal" style="--delay: 1;" data-hover="true">
             <div class="about-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
               </svg>
             </div>
-            <h3>Defensive Security & Hardening</h3>
+            <h3>Defensive Security &amp; Hardening</h3>
             <p>
               Dedicated to learning and applying defense-in-depth principles, security baselines, and system hardening techniques across Linux and Windows environments.
             </p>
           </div>
 
-          <div class="about-card">
+          <div class="about-card spotlight-card reveal" style="--delay: 2;" data-hover="true">
             <div class="about-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
               </svg>
             </div>
-            <h3>Network & Traffic Forensics</h3>
+            <h3>Network &amp; Traffic Forensics</h3>
             <p>
               Fascinated by dissecting packet captures, inspecting TCP/IP flows, detecting anomalies with Wireshark, and building automated scripts for packet inspection.
             </p>
           </div>
 
-          <div class="about-card">
+          <div class="about-card spotlight-card reveal" style="--delay: 3;" data-hover="true">
             <div class="about-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="16 18 22 12 16 6"></polyline>
                 <polyline points="8 6 2 12 8 18"></polyline>
               </svg>
             </div>
-            <h3>Secure Software & Scripting</h3>
+            <h3>Secure Software &amp; Scripting</h3>
             <p>
               Writing clean, maintainable security tooling in Python and Bash. Understanding the OWASP Top 10 to engineer applications that are secure by design.
             </p>
@@ -197,19 +242,19 @@
     <!-- Projects & Labs Showcase -->
     <section id="projects" class="section-padding projects-bg">
       <div class="container">
-        <div class="section-header">
-          <div class="section-subtitle">PRACTICAL LABS & CODE</div>
+        <div class="section-header reveal">
+          <div class="section-subtitle">PRACTICAL LABS &amp; CODE</div>
           <h2 class="section-title">Featured Projects</h2>
           <p class="section-desc">Hands-on security tools, forensic labs, and defensive automation scripts.</p>
         </div>
 
         <div class="projects-grid">
           <!-- Project 1 -->
-          <article class="project-card">
+          <article class="project-card spotlight-card reveal" style="--delay: 1;" data-hover="true">
             <div class="project-header">
               <span class="project-category">NETWORK DEFENSE</span>
               <div class="project-links">
-                <a href="https://github.com/ebenezerpaul10" target="_blank" rel="noopener noreferrer" title="View Source Code" class="icon-link">
+                <a href="https://github.com/ebenezerpaul10" target="_blank" rel="noopener noreferrer" title="View Source Code" class="icon-link" data-hover="true">
                   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                 </a>
               </div>
@@ -227,11 +272,11 @@
           </article>
 
           <!-- Project 2 -->
-          <article class="project-card">
+          <article class="project-card spotlight-card reveal" style="--delay: 2;" data-hover="true">
             <div class="project-header">
-              <span class="project-category">AUTOMATION & AUDIT</span>
+              <span class="project-category">AUTOMATION &amp; AUDIT</span>
               <div class="project-links">
-                <a href="https://github.com/ebenezerpaul10" target="_blank" rel="noopener noreferrer" title="View Source Code" class="icon-link">
+                <a href="https://github.com/ebenezerpaul10" target="_blank" rel="noopener noreferrer" title="View Source Code" class="icon-link" data-hover="true">
                   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                 </a>
               </div>
@@ -249,11 +294,11 @@
           </article>
 
           <!-- Project 3 -->
-          <article class="project-card">
+          <article class="project-card spotlight-card reveal" style="--delay: 1;" data-hover="true">
             <div class="project-header">
-              <span class="project-category">CRYPTOGRAPHY & SECURE DEV</span>
+              <span class="project-category">CRYPTOGRAPHY &amp; SECURE DEV</span>
               <div class="project-links">
-                <a href="https://github.com/ebenezerpaul10" target="_blank" rel="noopener noreferrer" title="View Source Code" class="icon-link">
+                <a href="https://github.com/ebenezerpaul10" target="_blank" rel="noopener noreferrer" title="View Source Code" class="icon-link" data-hover="true">
                   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                 </a>
               </div>
@@ -271,23 +316,23 @@
           </article>
 
           <!-- Project 4 -->
-          <article class="project-card">
+          <article class="project-card spotlight-card reveal" style="--delay: 2;" data-hover="true">
             <div class="project-header">
-              <span class="project-category">INCIDENT RESPONSE & SIEM</span>
+              <span class="project-category">INCIDENT RESPONSE &amp; SIEM</span>
               <div class="project-links">
-                <a href="https://github.com/ebenezerpaul10" target="_blank" rel="noopener noreferrer" title="View Source Code" class="icon-link">
+                <a href="https://github.com/ebenezerpaul10" target="_blank" rel="noopener noreferrer" title="View Source Code" class="icon-link" data-hover="true">
                   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                 </a>
               </div>
             </div>
-            <h3 class="project-title">ThreatHunt: SOC Analysis & Log Telemetry Lab</h3>
+            <h3 class="project-title">ThreatHunt: SOC Analysis &amp; Log Telemetry Lab</h3>
             <p class="project-summary">
               Hands-on detection engineering lab analyzing Sysmon, auth.log, and Windows Event IDs to detect brute force, lateral movement, and privilege escalation techniques.
             </p>
             <div class="tech-tags">
               <span class="tag">Splunk / ELK</span>
               <span class="tag">Sysmon</span>
-              <span class="tag">MITRE ATT&CK</span>
+              <span class="tag">MITRE ATT&amp;CK</span>
               <span class="tag">Threat Hunting</span>
             </div>
           </article>
@@ -298,53 +343,53 @@
     <!-- Skills Section -->
     <section id="skills" class="section-padding">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <div class="section-subtitle">CAPABILITIES</div>
           <h2 class="section-title">Technical Skill Matrix</h2>
           <p class="section-desc">Tools, protocols, and technologies I work with daily.</p>
         </div>
 
         <div class="skills-grid">
-          <div class="skill-category-card">
+          <div class="skill-category-card spotlight-card reveal" style="--delay: 1;" data-hover="true">
             <div class="skill-category-header">
               <div class="cat-indicator sec"></div>
-              <h3>Security & Analysis</h3>
+              <h3>Security &amp; Analysis</h3>
             </div>
             <ul class="skill-pill-list">
-              <li class="skill-pill">Network Traffic Forensics</li>
-              <li class="skill-pill">Wireshark & Packet Analysis</li>
-              <li class="skill-pill">OWASP Top 10</li>
-              <li class="skill-pill">Incident Response Basics</li>
-              <li class="skill-pill">MITRE ATT&CK Framework</li>
-              <li class="skill-pill">Vulnerability Assessment</li>
+              <li class="skill-pill" data-hover="true">Network Traffic Forensics</li>
+              <li class="skill-pill" data-hover="true">Wireshark &amp; Packet Analysis</li>
+              <li class="skill-pill" data-hover="true">OWASP Top 10</li>
+              <li class="skill-pill" data-hover="true">Incident Response Basics</li>
+              <li class="skill-pill" data-hover="true">MITRE ATT&amp;CK Framework</li>
+              <li class="skill-pill" data-hover="true">Vulnerability Assessment</li>
             </ul>
           </div>
 
-          <div class="skill-category-card">
+          <div class="skill-category-card spotlight-card reveal" style="--delay: 2;" data-hover="true">
             <div class="skill-category-header">
               <div class="cat-indicator sys"></div>
-              <h3>Systems & Environments</h3>
+              <h3>Systems &amp; Environments</h3>
             </div>
             <ul class="skill-pill-list">
-              <li class="skill-pill">Linux (Debian / Arch / Ubuntu)</li>
-              <li class="skill-pill">System Hardening & Permissions</li>
-              <li class="skill-pill">Windows Event Logging / Sysmon</li>
-              <li class="skill-pill">Docker & Virtualization</li>
-              <li class="skill-pill">Firewall Configuration (UFW/iptables)</li>
+              <li class="skill-pill" data-hover="true">Linux (Debian / Arch / Ubuntu)</li>
+              <li class="skill-pill" data-hover="true">System Hardening &amp; Permissions</li>
+              <li class="skill-pill" data-hover="true">Windows Event Logging / Sysmon</li>
+              <li class="skill-pill" data-hover="true">Docker &amp; Virtualization</li>
+              <li class="skill-pill" data-hover="true">Firewall Configuration (UFW/iptables)</li>
             </ul>
           </div>
 
-          <div class="skill-category-card">
+          <div class="skill-category-card spotlight-card reveal" style="--delay: 3;" data-hover="true">
             <div class="skill-category-header">
               <div class="cat-indicator dev"></div>
-              <h3>Development & Scripting</h3>
+              <h3>Development &amp; Scripting</h3>
             </div>
             <ul class="skill-pill-list">
-              <li class="skill-pill">Python (Scapy, Requests, Cryptography)</li>
-              <li class="skill-pill">Bash & Shell Automation</li>
-              <li class="skill-pill">Git & Version Control</li>
-              <li class="skill-pill">C / C++ Fundamentals</li>
-              <li class="skill-pill">HTML5 / Modern CSS / JavaScript</li>
+              <li class="skill-pill" data-hover="true">Python (Scapy, Requests, Cryptography)</li>
+              <li class="skill-pill" data-hover="true">Bash &amp; Shell Automation</li>
+              <li class="skill-pill" data-hover="true">Git &amp; Version Control</li>
+              <li class="skill-pill" data-hover="true">C / C++ Fundamentals</li>
+              <li class="skill-pill" data-hover="true">HTML5 / Modern CSS / JavaScript</li>
             </ul>
           </div>
         </div>
@@ -354,48 +399,100 @@
     <!-- Contact & Connect Section -->
     <section id="contact" class="section-padding contact-bg">
       <div class="container">
-        <div class="contact-card">
+        <div class="contact-card spotlight-card reveal" data-hover="true">
           <div class="contact-header">
-            <div class="status-badge">
+            <div class="status-badge" data-hover="true">
               <span class="status-dot"></span>
-              <span class="status-text">Ready to Connect</span>
+              <span class="status-text">Available Immediately</span>
             </div>
             <h2 class="contact-title">Let's build something secure together.</h2>
             <p class="contact-desc">
-              Whether you are looking for an enthusiastic cybersecurity intern, a research collaborator, or just want to chat about security defense and modern tech, my inbox is always open!
+              Whether you are looking for an enthusiastic cybersecurity intern, a research collaborator, or want to discuss security defense and modern technology, reach out anytime!
             </p>
           </div>
 
-          <div class="contact-interactive">
-            <div class="email-box">
-              <div class="email-details">
-                <span class="email-label">DIRECT EMAIL</span>
-                <span class="email-address" id="emailText">ebenezerpaul787@gmail.com</span>
+          <!-- Dual Contact Action Matrix -->
+          <div class="contact-dual-matrix">
+            <!-- Phone & WhatsApp Card -->
+            <div class="contact-channel-card spotlight-card" data-hover="true">
+              <div class="channel-icon-header">
+                <div class="channel-icon phone-glow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <span class="channel-label">PHONE &amp; WHATSAPP</span>
+                  <div class="channel-val" id="phoneText">+91 79045 09223</div>
+                </div>
               </div>
-              <button class="btn btn-primary" id="copyEmailBtn">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-                <span id="copyBtnText">Copy Email</span>
-              </button>
+              <div class="channel-actions">
+                <button class="btn btn-primary btn-sm" id="copyPhoneBtn" data-hover="true">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span>Copy Number</span>
+                </button>
+                <a href="tel:+917904509223" class="btn btn-outline btn-sm" data-hover="true">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                  <span>Direct Call</span>
+                </a>
+                <a href="https://wa.me/917904509223?text=Hi%20Ebenezer,%20saw%20your%20portfolio!" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" data-hover="true">
+                  <span>WhatsApp</span>
+                </a>
+              </div>
             </div>
 
-            <div class="quick-connect-links">
-              <a href="mailto:ebenezerpaul787@gmail.com" class="btn btn-outline">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <span>Open Mail Client</span>
-              </a>
-              <a href="https://github.com/ebenezerpaul10" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
-                <span>GitHub Profile</span>
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
-                <span>LinkedIn Profile</span>
-              </a>
+            <!-- Email Card -->
+            <div class="contact-channel-card spotlight-card" data-hover="true">
+              <div class="channel-icon-header">
+                <div class="channel-icon email-glow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <span class="channel-label">DIRECT EMAIL</span>
+                  <div class="channel-val" id="emailText">ebenezerpaul787@gmail.com</div>
+                </div>
+              </div>
+              <div class="channel-actions">
+                <button class="btn btn-primary btn-sm" id="copyEmailBtn" data-hover="true">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span>Copy Email</span>
+                </button>
+                <a href="mailto:ebenezerpaul787@gmail.com" class="btn btn-outline btn-sm" data-hover="true">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                  <span>Send Email</span>
+                </a>
+              </div>
             </div>
+          </div>
+
+          <!-- Quick Links Footer Bar -->
+          <div class="quick-connect-links" style="margin-top: 36px;">
+            <a href="https://github.com/ebenezerpaul10" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" data-hover="true">
+              <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+              <span>GitHub: @ebenezerpaul10</span>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" data-hover="true">
+              <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+              <span>LinkedIn Profile</span>
+            </a>
           </div>
         </div>
       </div>
@@ -407,17 +504,17 @@
     <div class="container footer-content">
       <div class="footer-left">
         <span class="footer-logo">EP // SEC</span>
-        <span class="footer-copy">&copy; <span id="currentYear"></span> Ebenezer Paul. Crafted with precision &amp; minimalism.</span>
+        <span class="footer-copy">&copy; <span id="currentYear"></span> Ebenezer Paul. Built with minimalist precision &amp; fluid motion.</span>
       </div>
       <div class="footer-status">
         <span class="security-lock-icon">🔒</span>
-        <span>Secure &amp; Privacy-First Static Site</span>
+        <span>Secure &amp; Privacy-First Static Architecture</span>
       </div>
     </div>
   </footer>
 
   <!-- Toast Notification Container -->
-  <div id="toast" class="toast">Email copied to clipboard!</div>
+  <div id="toast" class="toast">Action completed!</div>
 
   <script src="script.js"></script>
 </body>

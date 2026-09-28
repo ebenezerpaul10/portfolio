@@ -1,16 +1,142 @@
 /**
  * Ebenezer Paul — Minimalist Cybersecurity Portfolio
- * Interactive Terminal & Core Functionality
+ * Fluid Motion, Interactive Terminal, Spotlight & Reactive Animations
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Set current year in footer
+  // Set dynamic copyright year
   const yearElement = document.getElementById('currentYear');
   if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
   }
 
-  // --- Mobile Navigation Toggle ---
+  // --- 1. Scroll Progress Bar ---
+  const progressBar = document.getElementById('progressBar');
+  function updateScrollProgress() {
+    if (!progressBar) return;
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = `${Math.min(scrollPercent, 100)}%`;
+  }
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+
+  // --- 2. Custom Fluid Cursor & Ambient Tracker (Desktop) ---
+  const cursorDot = document.getElementById('cursorDot');
+  const cursorRing = document.getElementById('cursorRing');
+
+  let mouseX = -100;
+  let mouseY = -100;
+  let ringX = -100;
+  let ringY = -100;
+
+  if (cursorDot && cursorRing && window.matchMedia('(pointer: fine)').matches) {
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorDot.style.left = `${mouseX}px`;
+      cursorDot.style.top = `${mouseY}px`;
+    });
+
+    // Smooth lerp trailing animation for the cursor ring
+    function renderCursor() {
+      ringX += (mouseX - ringX) * 0.16;
+      ringY += (mouseY - ringY) * 0.16;
+      cursorRing.style.left = `${ringX}px`;
+      cursorRing.style.top = `${ringY}px`;
+      requestAnimationFrame(renderCursor);
+    }
+    requestAnimationFrame(renderCursor);
+
+    // Hover detection for interactive elements
+    const interactiveSelectors = 'a, button, input, [data-hover="true"], .spotlight-card, .chip-btn';
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest(interactiveSelectors)) {
+        document.body.classList.add('cursor-hover');
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest(interactiveSelectors)) {
+        document.body.classList.remove('cursor-hover');
+      }
+    });
+  }
+
+  // --- 3. Spotlight Card Glow & 3D Reactive Tilt ---
+  const spotlightCards = document.querySelectorAll('.spotlight-card');
+  spotlightCards.forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+
+      // Gentle 3D perspective tilt
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -4;
+      const rotateY = ((x - centerX) / centerX) * 4;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+      card.style.setProperty('--mouse-x', '-500px');
+      card.style.setProperty('--mouse-y', '-500px');
+    });
+  });
+
+  // --- 4. Click Ripple Wave Animation ---
+  function createRipple(e) {
+    const btn = e.currentTarget;
+    const rect = btn.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+
+    const size = Math.max(rect.width, rect.height) * 1.5;
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
+    ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
+
+    btn.appendChild(ripple);
+    setTimeout(() => {
+      ripple.remove();
+    }, 600);
+  }
+
+  const rippleElements = document.querySelectorAll('.btn, .chip-btn, .social-link, .contact-pill, .icon-link');
+  rippleElements.forEach((el) => {
+    el.addEventListener('click', createRipple);
+  });
+
+  // --- 5. Scroll-Driven Reveal Animation ---
+  const revealElements = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      }
+    );
+
+    revealElements.forEach((el) => revealObserver.observe(el));
+  } else {
+    // Fallback for older browsers
+    revealElements.forEach((el) => el.classList.add('revealed'));
+  }
+
+  // --- 6. Mobile Navigation Toggle ---
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
 
@@ -19,32 +145,31 @@ document.addEventListener('DOMContentLoaded', () => {
       navLinks.classList.toggle('open');
     });
 
-    // Close menu when clicking nav links
-    navLinks.querySelectorAll('a').forEach(link => {
+    navLinks.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('open');
       });
     });
   }
 
-  // --- Copy Email to Clipboard ---
-  const emailToCopy = "ebenezerpaul787@gmail.com";
-  const copyBtn = document.getElementById('copyEmailBtn');
-  const copyQuickBtn = document.getElementById('copyEmailQuickBtn');
+  // --- 7. Toast Notification System & Clipboard ---
   const toast = document.getElementById('toast');
+  let toastTimeout = null;
 
   function showToast(message) {
     if (!toast) return;
+    if (toastTimeout) clearTimeout(toastTimeout);
+
     toast.textContent = message;
     toast.classList.add('show');
-    setTimeout(() => {
+    toastTimeout = setTimeout(() => {
       toast.classList.remove('show');
     }, 2800);
   }
 
-  function handleCopyEmail(button) {
-    navigator.clipboard.writeText(emailToCopy).then(() => {
-      showToast("✓ Copied: " + emailToCopy);
+  function copyToClipboard(text, successMsg, button) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast(successMsg);
       if (button) {
         const textSpan = button.querySelector('span');
         if (textSpan) {
@@ -56,32 +181,49 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     }).catch(() => {
-      // Fallback
-      prompt("Copy email address:", emailToCopy);
+      prompt("Copy to clipboard:", text);
     });
   }
 
-  if (copyBtn) {
-    copyBtn.addEventListener('click', () => handleCopyEmail(copyBtn));
+  // Email Copy Handlers
+  const emailToCopy = "ebenezerpaul787@gmail.com";
+  const copyEmailBtn = document.getElementById('copyEmailBtn');
+  const copyEmailQuickBtn = document.getElementById('copyEmailQuickBtn');
+
+  if (copyEmailBtn) {
+    copyEmailBtn.addEventListener('click', () => {
+      copyToClipboard(emailToCopy, "✓ Email copied: " + emailToCopy, copyEmailBtn);
+    });
   }
-  if (copyQuickBtn) {
-    copyQuickBtn.addEventListener('click', () => handleCopyEmail(copyQuickBtn));
+  if (copyEmailQuickBtn) {
+    copyEmailQuickBtn.addEventListener('click', () => {
+      copyToClipboard(emailToCopy, "✓ Email copied: " + emailToCopy, copyEmailQuickBtn);
+    });
   }
 
-  // --- Active Nav Link on Scroll ---
+  // Phone Copy Handler
+  const phoneToCopy = "+91 79045 09223";
+  const copyPhoneBtn = document.getElementById('copyPhoneBtn');
+  if (copyPhoneBtn) {
+    copyPhoneBtn.addEventListener('click', () => {
+      copyToClipboard(phoneToCopy, "✓ Phone copied: " + phoneToCopy, copyPhoneBtn);
+    });
+  }
+
+  // --- 8. Active Nav Link on Scroll ---
   const sections = document.querySelectorAll('section[id]');
   const navItems = document.querySelectorAll('.nav-item');
 
   function highlightNavOnScroll() {
     const scrollY = window.scrollY;
 
-    sections.forEach(section => {
+    sections.forEach((section) => {
       const sectionHeight = section.offsetHeight;
-      const sectionTop = section.offsetTop - 100;
+      const sectionTop = section.offsetTop - 120;
       const sectionId = section.getAttribute('id');
 
       if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-        navItems.forEach(item => {
+        navItems.forEach((item) => {
           if (item.getAttribute('href') === `#${sectionId}`) {
             item.classList.add('active');
           } else {
@@ -91,10 +233,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  window.addEventListener('scroll', highlightNavOnScroll, { passive: true });
 
-  window.addEventListener('scroll', highlightNavOnScroll);
-
-  // --- Interactive Terminal Simulation ---
+  // --- 9. Interactive Terminal Simulation with Fluid Typewriter ---
   const terminalOutput = document.getElementById('terminalOutput');
   const terminalInput = document.getElementById('terminalInput');
   const terminalSubmit = document.getElementById('terminalSubmitBtn');
@@ -102,17 +243,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const COMMANDS = {
     help: `Available commands:
+  - phone      : Show direct telephone & WhatsApp channels
+  - email      : Direct email contact
   - whoami     : Learn more about Ebenezer Paul
   - focus      : Display core cybersecurity research domains
   - skills     : Print categorized technical capabilities
   - projects   : List featured security labs & tools
-  - contact    : Direct contact channels
+  - contact    : Full contact matrix
   - status     : Check internship & project availability
   - clear      : Reset terminal output`,
+
+    phone: `Direct Phone & WhatsApp:
+  Number : +91 79045 09223
+  Status : Available for calls & instant messaging`,
+
+    call: `Direct Phone & WhatsApp:
+  Number : +91 79045 09223
+  Status : Available for calls & instant messaging`,
+
+    email: `Direct Email:
+  Address: ebenezerpaul787@gmail.com
+  Status : Inbox open for collaborations`,
 
     whoami: `Ebenezer Paul
 Role   : Cybersecurity Student & Aspiring Security Specialist
 Focus  : Defensive Security, Traffic Forensics, Secure Systems
+Contact: +91 79045 09223 | ebenezerpaul787@gmail.com
 Mission: Building bulletproof systems and analyzing attack surfaces to protect digital assets.`,
 
     focus: `Core Research Areas:
@@ -132,14 +288,17 @@ Mission: Building bulletproof systems and analyzing attack surfaces to protect d
   3. CipherLock   - Client-side AES-256-GCM zero-knowledge vault
   4. ThreatHunt   - SOC analysis & log telemetry detection lab`,
 
-    contact: `Direct Inquiries:
+    contact: `Direct Contact Channels:
+  - Phone   : +91 79045 09223
   - Email   : ebenezerpaul787@gmail.com
-  - Status  : Available for security research & internships`,
+  - GitHub  : https://github.com/ebenezerpaul10
+  - Status  : 🟢 Ready for interviews & internships`,
 
     status: `[STATUS CHECK]:
   System Health : 100% OPERATIONAL
   Availability  : OPEN FOR INTERNSHIPS & RESEARCH
-  Firewall      : ACTIVE`
+  Firewall      : ACTIVE
+  Contact Link  : +91 79045 09223`
   };
 
   function appendTerminalLine(cmd, outputHtml, isRawText = false) {
@@ -209,11 +368,34 @@ Mission: Building bulletproof systems and analyzing attack surfaces to protect d
     });
   }
 
-  chipButtons.forEach(btn => {
+  // Typewriter effect when clicking quick chips
+  let isTyping = false;
+  function simulateTypewriter(text, callback) {
+    if (!terminalInput || isTyping) return;
+    isTyping = true;
+    terminalInput.value = '';
+    let i = 0;
+    const interval = setInterval(() => {
+      terminalInput.value += text[i];
+      i++;
+      if (i >= text.length) {
+        clearInterval(interval);
+        setTimeout(() => {
+          isTyping = false;
+          callback();
+        }, 150);
+      }
+    }, 45);
+  }
+
+  chipButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const command = btn.getAttribute('data-command');
       if (command) {
-        executeCommand(command);
+        simulateTypewriter(command, () => {
+          terminalInput.value = '';
+          executeCommand(command);
+        });
       }
     });
   });

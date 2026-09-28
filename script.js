@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Copy Email to Clipboard ---
-  const emailToCopy = "ebenezerpaul.sec@gmail.com";
+  const emailToCopy = "ebenezerpaul787@gmail.com";
   const copyBtn = document.getElementById('copyEmailBtn');
   const copyQuickBtn = document.getElementById('copyEmailQuickBtn');
   const toast = document.getElementById('toast');
@@ -133,7 +133,7 @@ Mission: Building bulletproof systems and analyzing attack surfaces to protect d
   4. ThreatHunt   - SOC analysis & log telemetry detection lab`,
 
     contact: `Direct Inquiries:
-  - Email   : ebenezerpaul.sec@gmail.com
+  - Email   : ebenezerpaul787@gmail.com
   - Status  : Available for security research & internships`,
 
     status: `[STATUS CHECK]:
